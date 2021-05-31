@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Lesson1</string>
+    <string name="button">Button</string>
+    <string name="switch1">Switch</string>
+    <string name="ToggleButton_off">ВЫКЛ</string>
+    <string name="ToggleButton_on">ВКЛ</string>
+    <string name="_1">1 часть</string>
+    <string name="_2">2 часть</string>
+    <string name="name">Name</string>
+</resources>
