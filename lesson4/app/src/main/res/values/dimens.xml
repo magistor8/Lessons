@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="TotalTextHeight">150sp</dimen>
+    <dimen name="TotalTextSize">50sp</dimen>
+    <dimen name="SubtotalTextSize">20sp</dimen>
+    <dimen name="ImageButtonSize">25sp</dimen>
+    <dimen name="ImageButtonMargin">10sp</dimen>
+    <dimen name="LinerWidth">350sp</dimen>
+    <dimen name="ButtonTextSize">20sp</dimen>
+</resources>

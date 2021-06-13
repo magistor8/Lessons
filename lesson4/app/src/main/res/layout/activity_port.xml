@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageButton
+        android:id="@+id/change_theme"
+        android:layout_width="@dimen/ImageButtonSize"
+        android:layout_height="@dimen/ImageButtonSize"
+        android:layout_gravity="top|end"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/theme"
+        android:layout_marginTop="@dimen/ImageButtonMargin"
+        android:layout_marginEnd="@dimen/ImageButtonMargin"
+        app:tint="@color/ImageButtonTint"
+        android:contentDescription="@string/ChangeThemeButtonText" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/LinerColor"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/TotalTextHeight"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center|bottom"
+            android:textColor="@color/TextViewTextColor"
+            android:textSize="@dimen/TotalTextSize"
+            android:background="@null"/>
+
+        <TextView
+            android:id="@+id/subtotal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/TotalTextHeight"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center|top"
+            android:textColor="@color/TextViewTextColor"
+            android:textSize="@dimen/SubtotalTextSize"
+            android:background="@null"/>
+
+        <include
+            layout="@layout/grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+</FrameLayout>
