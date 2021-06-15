@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="4"
+    android:background="@null">
+
+
+    <Button
+        android:id="@+id/buttonC"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:backgroundTint="@color/OperationButtonColor"
+        android:text="@string/c"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/buttonBack"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:backgroundTint="@color/OperationButtonColor"
+        android:text="@string/Back"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/buttonPercent"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:backgroundTint="@color/OperationButtonColor"
+        android:text="@string/Percent"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/buttonDivision"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:backgroundTint="@color/OperationButtonColor"
+        android:text="@string/Division"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/button7"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:text="@string/_7"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/button8"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:text="@string/_8"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/button9"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:text="@string/_9"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/buttonMultip"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:backgroundTint="@color/OperationButtonColor"
+        android:text="@string/x"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/button4"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:text="@string/_4"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/button5"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:text="@string/_5"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/button6"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:text="@string/_6"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/buttonMin"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:backgroundTint="@color/OperationButtonColor"
+        android:text="@string/min"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/button1"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:text="@string/_1"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/button2"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:text="@string/_2"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/button3"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:text="@string/_3"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/buttonPlus"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:backgroundTint="@color/OperationButtonColor"
+        android:text="@string/plus"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/button0"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnSpan="2"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:text="@string/_0"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/buttonDot"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:text="@string/Dot"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+
+    <Button
+        android:id="@+id/buttonEqually"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_rowWeight="1"
+        android:layout_columnWeight="1"
+        android:layout_gravity="fill"
+        android:backgroundTint="@color/OperationButtonColor"
+        android:text="@string/Eq"
+        android:textColor="@color/ButtonTextColor"
+        android:textSize="@dimen/ButtonTextSize" />
+</GridLayout>
