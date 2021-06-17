@@ -1,8 +1,13 @@
 package com.example.lesson4;
 
+import androidx.activity.result.*;
+
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -15,9 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private final String NameSharedPreference = "CALC";
     private final String AppTheme = "APP_THEME";
     private final String keyData = "Key";
-
-    private final int LightTheme = 0;
-    private final int DarkTheme = 1;
+    private final String intentKey = "KEY_THEME";
 
     protected Data data = new Data();
 
@@ -51,74 +54,76 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(getAppTheme(R.style.Base));
+        setTheme(getAppTheme());
         setSpecificLayout(this.getResources().getConfiguration().orientation);
         subtotal = findViewById(R.id.subtotal);
         total = findViewById(R.id.total);
         initButton();
-        initButtonChangeTheme();
+        initButtonSetting();
     }
 
-    private void initButtonChangeTheme() {
-        findViewById(R.id.change_theme)
-            .setOnClickListener(v -> {
-                //Находим текущую тему и выбираем противоположную
-                int themeToChange = getCurrentTheme();
-                // сохраним настройки
-                setAppTheme(themeToChange);
-                // пересоздадим активити, чтобы тема применилась
-                recreate();
-        });
+    private void initButtonSetting() {
+        findViewById(R.id.setting)
+                .setOnClickListener(v -> {
+                    Intent runSettings = new Intent(MainActivity.this, SettingActivity.class);
+                    runSettings.putExtra(intentKey, isLight());
+                    ActivityResultLauncher.launch(runSettings);
+                });
     }
 
-    private int getCurrentTheme() {
+    ActivityResultLauncher<Intent> ActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent intentResult = result.getData();
+                    Bundle params = intentResult.getExtras();
+                    if (params != null) {
+                        if (params.getBoolean(intentKey) != isLight()) {
+                            //Находим текущую тему и выбираем противоположную
+                            setAppTheme();
+                            // пересоздадим активити, чтобы тема применилась
+                            recreate();
+                        }
+                    }
+                }
+            });
+
+    private void setAppTheme() {
+        //Читаем настройки
         SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference, MODE_PRIVATE);
-        int currentTheme = sharedPref.getInt(AppTheme, LightTheme);
-        if (currentTheme == LightTheme) {
-            return DarkTheme;
-        }
-        return LightTheme;
-    }
-
-    private int getAppTheme(int codeStyle) {
-        return codeStyleToStyleId(getCodeStyle(codeStyle));
-    }
-
-    private void setAppTheme(int codeStyle) {
-        SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference, MODE_PRIVATE);
-        // Настройки сохраняются посредством специального класса editor.
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(AppTheme, codeStyle);
+        if (isLight()) {
+            editor.putBoolean(AppTheme, false);
+        } else {
+            editor.putBoolean(AppTheme, true);
+        }
         editor.apply();
     }
 
-    private int codeStyleToStyleId(int codeStyle){
-        if (codeStyle == LightTheme) {
+    private int getAppTheme() {
+        if (isLight()) {
             return R.style.Base;
         }
         return R.style.DarkTheme;
     }
 
     // Чтение настроек, параметр «тема»
-    private int getCodeStyle(int codeStyle){
-        // Работаем через специальный класс сохранения и чтения настроек
+    private boolean isLight() {
         SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference, MODE_PRIVATE);
-        //Прочитать тему, если настройка не найдена - взять по умолчанию
-        return sharedPref.getInt(AppTheme, codeStyle);
+        return sharedPref.getBoolean(AppTheme, true);
     }
 
 
-    public void setSpecificLayout(int orientation){
-        if(orientation== Configuration.ORIENTATION_LANDSCAPE){
+    public void setSpecificLayout(int orientation) {
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setContentView(R.layout.activity_land);
-        }
-        else if(orientation== Configuration.ORIENTATION_PORTRAIT){
+        } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             setContentView(R.layout.activity_port);
         }
     }
 
     @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig){
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setSpecificLayout(newConfig.orientation);
     }
@@ -141,13 +146,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Отображение данных на экране
-    private void setParams(){
+    private void setParams() {
         subtotal.setText(data.getSubtotalResult());
         total.setText(data.getTotalResult());
     }
 
     private final View.OnClickListener listener = v -> {
-        Button b = (Button)v;
+        Button b = (Button) v;
         String buttonText = b.getText().toString();
         //Чистим тотал
         total.setText("");
@@ -158,22 +163,19 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private void clickButton(String buttonText) {
-        if(isArithmeticOperation(buttonText)) {
+        if (isArithmeticOperation(buttonText)) {
             arithmeticOperation(buttonText);
-        }
-        else if(buttonText.equals("=")) {
+        } else if (buttonText.equals("=")) {
             if (data.getArgCount() == 3) {
                 //Выводим результат
                 showResult();
             } else if (data.getArgCount() == 0) {
                 return;
             }
-        }
-        else if(buttonText.equals("C")) {
+        } else if (buttonText.equals("C")) {
             //Очищаем все
             clearAll();
-        }
-        else if(buttonText.equals("<<")) {
+        } else if (buttonText.equals("<<")) {
             //Удаляем последнее действие
             if (data.getTempString() == null) return;
             //Делим строку
@@ -365,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
                 data.setTempString(convert(var1 * var2));
                 break;
             case ("%"):
-                data.setTempString(convert((var1/100) * var2));
+                data.setTempString(convert((var1 / 100) * var2));
                 break;
         }
     }
