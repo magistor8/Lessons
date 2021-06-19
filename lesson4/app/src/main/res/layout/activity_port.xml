@@ -7,17 +7,17 @@
     tools:context=".MainActivity">
 
     <ImageButton
-        android:id="@+id/change_theme"
+        android:id="@+id/setting"
         android:layout_width="@dimen/ImageButtonSize"
         android:layout_height="@dimen/ImageButtonSize"
         android:layout_gravity="top|end"
         android:background="@null"
         android:scaleType="fitCenter"
-        android:src="@drawable/theme"
+        android:src="@drawable/gear"
         android:layout_marginTop="@dimen/ImageButtonMargin"
         android:layout_marginEnd="@dimen/ImageButtonMargin"
         app:tint="@color/ImageButtonTint"
-        android:contentDescription="@string/ChangeThemeButtonText" />
+        android:contentDescription="@string/SettingButton" />
 
     <LinearLayout
         android:layout_width="match_parent"

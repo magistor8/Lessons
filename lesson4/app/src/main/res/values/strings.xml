@@ -21,4 +21,7 @@
     <string name="Eq">=</string>
     <string name="Back"><![CDATA[<<]]></string>
     <string name="ChangeThemeButtonText">изменить тему</string>
+    <string name="SettingButton">настройки</string>
+    <string name="SwitchText">Ночная тема</string>
+    <string name="applyText">Apply</string>
 </resources>

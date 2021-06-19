@@ -12,4 +12,7 @@
     <color name="ImageButtonTint">#FFFFFF</color>
     <color name="TextViewTextColor">#FFFFFF</color>
     <color name="ButtonTextColor">#FFFFFF</color>
+    <color name="applyColor">#FAF9F9</color>
+    <color name="switchTextColor">#FFFFFF</color>
+    <color name="applyTextColor">#0B0A0A</color>
 </resources>

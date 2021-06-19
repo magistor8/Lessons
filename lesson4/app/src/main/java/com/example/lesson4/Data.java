@@ -13,6 +13,7 @@ public class Data implements Parcelable {
     private int lastOperation;
     //Кол-во аргументов
     private int argCount;
+    protected boolean isLightTheme;
 
     protected Data(Parcel in) {
         tempString = in.readString();

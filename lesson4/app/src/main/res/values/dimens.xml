@@ -7,4 +7,7 @@
     <dimen name="ImageButtonMargin">10sp</dimen>
     <dimen name="LinerWidth">350sp</dimen>
     <dimen name="ButtonTextSize">20sp</dimen>
+    <dimen name="SwitchTextSize">20sp</dimen>
+    <dimen name="SwitchPadding">5sp</dimen>
+    <dimen name="applyMargin">5sp</dimen>
 </resources>
