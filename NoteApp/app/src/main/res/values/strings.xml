@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">NoteApp</string>
+    <string name="todo">TODO</string>
+    <string name="Date">дата</string>
+    <string name="Time">время</string>
+    <string name="Description">Description</string>
+    <string name="Title">Title</string>
+    <string name="SearchHint">Поиск</string>
+    <string name="_123">123</string>
+</resources>

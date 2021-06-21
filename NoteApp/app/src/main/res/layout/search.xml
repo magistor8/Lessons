@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/SearchPadding"
+    android:background="@drawable/edit_text_round_border">
+    <EditText
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        tools:ignore="Autofill"
+        android:inputType="text"
+        android:hint="@string/SearchHint"
+        android:padding="@dimen/SearchPadding"
+        android:background="@null"/>
+
+    <ImageButton
+        android:id="@+id/search"
+        android:layout_width="@dimen/ImageButtonSize"
+        android:layout_height="@dimen/ImageButtonSize"
+        android:layout_gravity="end|center"
+        android:background="@null"
+        android:contentDescription="@string/_123"
+        android:scaleType="fitCenter"
+        android:src="@drawable/search"
+        app:tint="@color/ImageButtonTint" />
+</LinearLayout>
