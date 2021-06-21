@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Title">
+        <item>Моя первая заметка</item>
+        <item>Важное</item>
+        <item>Дела</item>
+    </string-array>
+
+    <string-array name="Description">
+        <item>Я создал первую заметку</item>
+        <item>Тут все важные данные</item>
+        <item>Список моих дел</item>
+    </string-array>
+
+    <integer-array name="Date">
+        <item>1623254789</item>
+        <item>1624156566</item>
+        <item>1624268300</item>
+    </integer-array>
+</resources>
