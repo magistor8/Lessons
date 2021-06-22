@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,10 +21,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class NoteListFragment extends Fragment {
 
@@ -51,7 +51,25 @@ public class NoteListFragment extends Fragment {
 
 //        restoreNotes(savedInstanceState);
 //        initButtonNew();
+        initSearchButton();
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void initSearchButton() {
+        SearchView search = getView().findViewById(R.id.searchText); // поиск пункта
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            // реагирует на конец ввода поиска
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getContext(), query, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            // реагирует на нажатие каждой клавиши
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
     }
 
     private void createNoteListFromRes() {
