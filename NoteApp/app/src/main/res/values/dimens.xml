@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="FloatingActionButtonMArgin">20sp</dimen>
+    <dimen name="FloatingActionButtonMaxImageSize">20sp</dimen>
+    <dimen name="NoteListMargin">10sp</dimen>
+    <dimen name="NoteFragmentMarginLeft">5sp</dimen>
+    <dimen name="TitlePadding">10sp</dimen>
+    <dimen name="DescriptionTextSize">15sp</dimen>
+    <dimen name="DescriptionPadding">10sp</dimen>
+    <dimen name="NoteListMarginTop">5sp</dimen>
+    <dimen name="SearchPadding">5sp</dimen>
+    <dimen name="ImageButtonSize">25sp</dimen>
+</resources>
