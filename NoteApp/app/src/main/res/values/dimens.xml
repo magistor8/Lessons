@@ -10,4 +10,7 @@
     <dimen name="NoteListMarginTop">5sp</dimen>
     <dimen name="SearchPadding">5sp</dimen>
     <dimen name="ImageButtonSize">25sp</dimen>
+    <dimen name="nav_header_height">200sp</dimen>
+    <dimen name="nav_header_dimen">20sp</dimen>
+    <dimen name="imageButtonAv">100sp</dimen>
 </resources>

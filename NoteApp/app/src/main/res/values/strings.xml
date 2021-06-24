@@ -7,4 +7,9 @@
     <string name="Title">Title</string>
     <string name="SearchHint">Поиск</string>
     <string name="_123">123</string>
+    <string name="setting">Настройки</string>
+    <string name="about">О приложении</string>
+    <string name="fragment_navigation">Фамилия Имя Отчество</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
