@@ -80,7 +80,6 @@ public class NoteListFragment extends Fragment {
                 OpenNoteFragment(data);
             }
         });
-
     }
 
 
@@ -122,37 +121,6 @@ public class NoteListFragment extends Fragment {
         super.onSaveInstanceState(instanceState);
     }
 
-    // Восстановление данных
-    @Override
-    public void onViewStateRestored(Bundle instanceState) {
-        super.onViewStateRestored(instanceState);
-    }
-
-//    private void showNotes() {
-//        //Получаем лист заметок
-//        LinearLayout notesListView = getView().findViewById(R.id.notesList);
-//        //Надуватель
-//        LayoutInflater inflater = getLayoutInflater();
-//        //Создаем список заметок
-//        for (int i = 0; i < notesArrayList.size(); i++) {
-//            //Надуваем новый эелемент
-//            LinearLayout note = (LinearLayout) inflater.inflate(R.layout.note, null);
-//            //Заполняем
-//            fillNote(i, note);
-//            //Вешаем лисенер
-//            addListenerToNote(i, note);
-//            //Показываем в списке
-//            notesListView.addView(note);
-//        }
-//    }
-
-//    private void addListenerToNote(int i, LinearLayout note) {
-//        note.setOnClickListener(v -> {
-//            Note data = notesArrayList.get(i);
-//            OpenNoteFragment(data);
-//        });
-//    }
-
     private void OpenNoteFragment(Note data) {
         NoteFragment detail = NoteFragment.newInstance(data);
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -166,25 +134,4 @@ public class NoteListFragment extends Fragment {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
-
-//    private void fillNote(int i, LinearLayout note) {
-//        int count = note.getChildCount();
-//        View v1 = null;
-//        View v2 = null;
-//        for(int j =0; j <count; j++) {
-//            v1 = note.getChildAt(j);
-//            if (v1 instanceof TextView) {
-//                ((TextView) v1).setText(notesArrayList.get(i).getTitle());
-//                continue;
-//            }
-//            v2 = ((LinearLayout) v1).getChildAt(0);
-//            SimpleDateFormat sd = new SimpleDateFormat("dd.MM.yyyy");
-//            String date = sd.format(new Date(notesArrayList.get(i).getDate() * 1000));
-//            ((TextView) v2).setText(date);
-//            v2 = ((LinearLayout) v1).getChildAt(1);
-//            sd.applyPattern("HH:mm");
-//            String time = sd.format(new Date(notesArrayList.get(i).getDate() * 1000));
-//            ((TextView) v2).setText(time);
-//        }
-//    }
 }
