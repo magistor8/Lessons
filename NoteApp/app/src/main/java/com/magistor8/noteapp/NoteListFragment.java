@@ -16,6 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -46,14 +48,40 @@ public class NoteListFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        //Промежуточный метод для демонстрации
         createNoteListFromRes();
-
-//        restoreNotes(savedInstanceState);
-//        initButtonNew();
+        initList(view);
         initSearchButton();
         super.onViewCreated(view, savedInstanceState);
     }
+
+    private void initList(@NonNull View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
+        initRecyclerView(recyclerView);
+    }
+
+    private void initRecyclerView(RecyclerView recyclerView){
+
+        // Эта установка служит для повышения производительности системы
+        recyclerView.setHasFixedSize(true);
+
+        // Будем работать со встроенным менеджером
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        // Установим адаптер
+        NoteAdapter adapter = new NoteAdapter(notesArrayList);
+        recyclerView.setAdapter(adapter);
+
+        // Установим слушателя
+        adapter.SetOnItemClickListener(new NoteAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Note data = notesArrayList.get(position);
+                OpenNoteFragment(data);
+            }
+        });
+    }
+
 
     private void initSearchButton() {
         SearchView search = getView().findViewById(R.id.searchText); // поиск пункта
@@ -81,20 +109,7 @@ public class NoteListFragment extends Fragment {
                 notesArrayList.add(new Note(Titles[i], Descriptions[i], Dates[i]));
             }
         }
-        showNotes();
     }
-
-//    private void initButtonNew() {
-//        FloatingActionButton addNoteButton = getView().findViewById(R.id.add);
-//        addNoteButton.setOnClickListener(v -> {
-//            //Создаем новую заметку
-//            Note newNote = new Note("Title", "Description");
-//            //Добавляем ее в лист
-//            notesArrayList.add(newNote);
-//            //Открываем ее
-//            OpenNoteFragment(newNote);
-//        });
-//    }
 
     // Сохранение данных
     @Override
@@ -104,51 +119,6 @@ public class NoteListFragment extends Fragment {
             instanceState.putParcelable(KEY_SAVE, list);
         }
         super.onSaveInstanceState(instanceState);
-    }
-
-    // Восстановление данных
-    @Override
-    public void onViewStateRestored(Bundle instanceState) {
-        super.onViewStateRestored(instanceState);
-    }
-
-//    private void restoreNotes(Bundle instanceState) {
-//        if (!notesArrayList.isEmpty()) {
-//            showNotes();
-//            return;
-//        }
-//        if (instanceState != null) {
-//            NotesList notesList = instanceState.getParcelable(KEY_SAVE);
-//            if (notesList != null) {
-//                notesArrayList = Arrays.asList(notesList.getNotes());
-//                showNotes();
-//            }
-//        }
-//    }
-
-    private void showNotes() {
-        //Получаем лист заметок
-        LinearLayout notesListView = getView().findViewById(R.id.notesList);
-        //Надуватель
-        LayoutInflater inflater = getLayoutInflater();
-        //Создаем список заметок
-        for (int i = 0; i < notesArrayList.size(); i++) {
-            //Надуваем новый эелемент
-            LinearLayout note = (LinearLayout) inflater.inflate(R.layout.note, null);
-            //Заполняем
-            fillNote(i, note);
-            //Вешаем лисенер
-            addListenerToNote(i, note);
-            //Показываем в списке
-            notesListView.addView(note);
-        }
-    }
-
-    private void addListenerToNote(int i, LinearLayout note) {
-        note.setOnClickListener(v -> {
-            Note data = notesArrayList.get(i);
-            OpenNoteFragment(data);
-        });
     }
 
     private void OpenNoteFragment(Note data) {
@@ -163,26 +133,5 @@ public class NoteListFragment extends Fragment {
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-    }
-
-    private void fillNote(int i, LinearLayout note) {
-        int count = note.getChildCount();
-        View v1 = null;
-        View v2 = null;
-        for(int j =0; j <count; j++) {
-            v1 = note.getChildAt(j);
-            if (v1 instanceof TextView) {
-                ((TextView) v1).setText(notesArrayList.get(i).getTitle());
-                continue;
-            }
-            v2 = ((LinearLayout) v1).getChildAt(0);
-            SimpleDateFormat sd = new SimpleDateFormat("dd.MM.yyyy");
-            String date = sd.format(new Date(notesArrayList.get(i).getDate() * 1000));
-            ((TextView) v2).setText(date);
-            v2 = ((LinearLayout) v1).getChildAt(1);
-            sd.applyPattern("HH:mm");
-            String time = sd.format(new Date(notesArrayList.get(i).getDate() * 1000));
-            ((TextView) v2).setText(time);
-        }
     }
 }
