@@ -155,8 +155,8 @@ public class NoteListFragment extends Fragment implements Observer {
         } else {
             fragmentTransaction.replace(R.id.fragment_container, detail);
         }
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
     }
 
@@ -169,10 +169,17 @@ public class NoteListFragment extends Fragment implements Observer {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        Fragment noteFragment = fragmentManager.findFragmentById(R.id.noteView);
         if (item.getItemId() == R.id.action_delete) {
             int position = adapter.getMenuPosition();
             notesArrayList.remove(position);
             adapter.notifyItemRemoved(position);
+            if (isLandscape && noteFragment != null) {
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.remove(noteFragment);
+                fragmentTransaction.commit();
+            }
             return true;
         }
         return super.onContextItemSelected(item);
