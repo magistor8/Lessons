@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,8 +13,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.magistor8.noteapp.observer.Publisher;
+import com.magistor8.noteapp.observer.PublisherGetter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PublisherGetter {
+
+    private Publisher publisher = new Publisher();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +29,20 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null){
 
-            NoteListFragment details = new NoteListFragment();
-            details.setArguments(getIntent().getExtras());
+            NoteListFragment noteListFragment = new NoteListFragment();
+            // Подписываем фрагменты
+            publisher.subscribe(noteListFragment);
+            noteListFragment.setArguments(getIntent().getExtras());
 
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, details)
+                    .replace(R.id.fragment_container, noteListFragment)
                     .commit();
+        } else {
+            NoteListFragment noteListFragment = (NoteListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            publisher.subscribe(noteListFragment);
         }
+
     }
 
     // регистрация drawer
@@ -85,11 +96,15 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Здесь определяем меню приложения (активити)
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public Publisher getPublisher() {
+        return publisher;
     }
 }

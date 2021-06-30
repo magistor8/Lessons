@@ -11,10 +11,6 @@ public class Note implements Parcelable{
     private String description;
     private long date;
 
-    public long getDate() {
-        return date;
-    }
-
     public Note(String title, String description) {
         this.title = title;
         this.description = description;
@@ -24,7 +20,7 @@ public class Note implements Parcelable{
     public Note(String title, String description, int Date) {
         this.title = title;
         this.description = description;
-        date = (long) Date;
+        date = (long) Date * 1000;
     }
 
     protected Note(Parcel in) {
@@ -59,6 +55,14 @@ public class Note implements Parcelable{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
+    }
+
+    public long getDate() {
+        return date;
     }
 
     @Override
