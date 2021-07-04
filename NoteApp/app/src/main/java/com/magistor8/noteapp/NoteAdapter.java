@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
@@ -17,10 +18,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     private List<Note> notesArrayList;
     private OnItemClickListener itemClickListener;  // Слушатель будет устанавливаться извне
+    private final Fragment fragment;
+    private int menuPosition;
 
     // Передаём в конструктор источник данных
-    public NoteAdapter(List<Note> dataSource) {
+    public NoteAdapter(List<Note> dataSource, Fragment fragment) {
         this.notesArrayList = dataSource;
+        this.fragment = fragment;
     }
 
     // Создать новый элемент пользовательского интерфейса
@@ -36,17 +40,25 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         return new ViewHolder(v);
     }
 
+    public int getMenuPosition() {
+        return menuPosition;
+    }
+
     // Заменить данные в пользовательском интерфейсе
     // Вызывается менеджером
     @Override
     public void onBindViewHolder(@NonNull NoteAdapter.ViewHolder viewHolder, int i) {
         // Вынести на экран, используя ViewHolder
+        setDateToTextView(viewHolder, i);
+    }
+
+    private void setDateToTextView(ViewHolder viewHolder, int i) {
         viewHolder.getTitle().setText(notesArrayList.get(i).getTitle());
         SimpleDateFormat sd = new SimpleDateFormat("dd.MM.yyyy");
-        String date = sd.format(new Date(notesArrayList.get(i).getDate() * 1000));
+        String date = sd.format(new Date(notesArrayList.get(i).getDate()));
         viewHolder.getData().setText(date);
         sd.applyPattern("HH:mm");
-        String time = sd.format(new Date(notesArrayList.get(i).getDate() * 1000));
+        String time = sd.format(new Date(notesArrayList.get(i).getDate()));
         viewHolder.getTime().setText(time);
     }
 
@@ -80,12 +92,27 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             Data = (TextView) NoteItem.findViewById(R.id.data);
             Time = (TextView) NoteItem.findViewById(R.id.time);
 
+            //Регистрируем контекстное меню
+            registerContextMenu(itemView);
+
             // Обработчик нажатий на этом ViewHolder
             NoteItem.setOnClickListener(v -> {
                 if (itemClickListener != null) {
                     itemClickListener.onItemClick(v, getAdapterPosition());
                 }
             });
+        }
+
+        private void registerContextMenu(View itemView) {
+            if (fragment != null){
+                //Лисенер долгого нажатия
+                itemView.setOnLongClickListener(v -> {
+                    //Улавливаем номер позиции
+                    menuPosition = getLayoutPosition();
+                    return false;
+                });
+                fragment.registerForContextMenu(itemView);
+            }
         }
 
         public TextView getTitle() {
