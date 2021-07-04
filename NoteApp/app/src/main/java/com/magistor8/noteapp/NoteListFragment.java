@@ -23,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.magistor8.noteapp.observer.Observer;
+import com.magistor8.noteapp.observer.Publisher;
+import com.magistor8.noteapp.observer.PublisherGetter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +38,7 @@ public class NoteListFragment extends Fragment implements Observer, FirebaseComp
     private NoteAdapter adapter;
     private View generalView;
     private Firebase firebase;
+    private Publisher publisher;
 
 
     @Override
@@ -57,7 +60,7 @@ public class NoteListFragment extends Fragment implements Observer, FirebaseComp
             fillNoteListFromInstanceState(savedInstanceState);
         }
         generalView = view;
-        if(notesArrayList.isEmpty()) {
+        if(notesArrayList.isEmpty() || firebase.getSize() == 0) {
             firebase.init(this);
         } else {
             complete(notesArrayList);
@@ -76,7 +79,9 @@ public class NoteListFragment extends Fragment implements Observer, FirebaseComp
 
     private void fillNoteListFromInstanceState(Bundle savedInstanceState) {
         NotesList list = savedInstanceState.getParcelable(KEY_SAVE);
-        notesArrayList = new ArrayList<>(Arrays.asList(list.getNotes()));
+        if (list != null) {
+            notesArrayList = new ArrayList<>(Arrays.asList(list.getNotes()));
+        }
     }
 
     private void initList(@NonNull View view) {
@@ -160,6 +165,13 @@ public class NoteListFragment extends Fragment implements Observer, FirebaseComp
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
+        //Получаем паблишер
+        if (publisher == null) {
+            PublisherGetter publisherGetter = (PublisherGetter) getContext();
+            publisher = publisherGetter.getPublisher();
+            //Добавляем подписчика
+            publisher.subscribe(this);
+        }
     }
 
     @Override
@@ -177,7 +189,9 @@ public class NoteListFragment extends Fragment implements Observer, FirebaseComp
             int position = adapter.getMenuPosition();
             //Вносим иземение в firebase
             firebase.deleteCardData(position);
+            //Удаляем заметку из листа
             notesArrayList.remove(position);
+            //Уведомляем адаптер
             adapter.notifyItemRemoved(position);
             if (isLandscape && noteFragment != null) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -198,4 +212,5 @@ public class NoteListFragment extends Fragment implements Observer, FirebaseComp
         //Вносим иземение в firebase
         firebase.updateNote(position, note);
     }
+
 }

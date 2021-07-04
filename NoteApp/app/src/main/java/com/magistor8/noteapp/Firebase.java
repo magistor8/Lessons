@@ -75,9 +75,13 @@ public class Firebase {
         });
     }
 
-    public void deleteCardData(int position) {
+    protected void deleteCardData(int position) {
         // Удалить документ с определённым идентификатором
         collection.document(notesArrayList.get(position).getId()).delete();
+    }
+
+    protected int getSize() {
+        return notesArrayList.size();
     }
 
 }
