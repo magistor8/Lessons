@@ -23,21 +23,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.magistor8.noteapp.observer.Observer;
+import com.magistor8.noteapp.observer.Publisher;
+import com.magistor8.noteapp.observer.PublisherGetter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
-public class NoteListFragment extends Fragment implements Observer {
+public class NoteListFragment extends Fragment implements Observer, FirebaseComplete {
 
     private static final String KEY_SAVE = "KEY_SAVE";
-
     private List<Note> notesArrayList = new ArrayList<>();
-
     private boolean isLandscape;
-
     private NoteAdapter adapter;
+    private View generalView;
+    private Firebase firebase;
+    private Publisher publisher;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +51,7 @@ public class NoteListFragment extends Fragment implements Observer {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        firebase = new Firebase();
     }
 
     @Override
@@ -56,16 +59,29 @@ public class NoteListFragment extends Fragment implements Observer {
         if (savedInstanceState != null) {
             fillNoteListFromInstanceState(savedInstanceState);
         }
-        createNoteListFromRes();
-        initList(view);
+        generalView = view;
+        if(notesArrayList.isEmpty() || firebase.getSize() == 0) {
+            firebase.init(this);
+        } else {
+            complete(notesArrayList);
+        }
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    //Запускается после загрузки списка из Firebase
+    @Override
+    public void complete(List<Note> noteList) {
+        notesArrayList = noteList;
+        initList(generalView);
         initSearchButton();
         initNewNoteButton();
-        super.onViewCreated(view, savedInstanceState);
     }
 
     private void fillNoteListFromInstanceState(Bundle savedInstanceState) {
         NotesList list = savedInstanceState.getParcelable(KEY_SAVE);
-        notesArrayList = new ArrayList<>(Arrays.asList(list.getNotes()));
+        if (list != null) {
+            notesArrayList = new ArrayList<>(Arrays.asList(list.getNotes()));
+        }
     }
 
     private void initList(@NonNull View view) {
@@ -122,18 +138,9 @@ public class NoteListFragment extends Fragment implements Observer {
             notesArrayList.add(note);
             adapter.notifyItemInserted(notesArrayList.size() - 1);
             OpenNoteFragment(note, notesArrayList.size() - 1);
+            //Вносим иземение в firebase
+            firebase.addCardData(note);
         });
-    }
-
-    private void createNoteListFromRes() {
-        if (notesArrayList.isEmpty()) {
-            String[] Titles = getResources().getStringArray(R.array.Title);
-            String[] Descriptions = getResources().getStringArray(R.array.Description);
-            int[] Dates = getResources().getIntArray(R.array.Date);
-            for (int i = 0; i < Titles.length; i++) {
-                notesArrayList.add(new Note(Titles[i], Descriptions[i], Dates[i]));
-            }
-        }
     }
 
     // Сохранение данных
@@ -158,6 +165,13 @@ public class NoteListFragment extends Fragment implements Observer {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
+        //Получаем паблишер
+        if (publisher == null) {
+            PublisherGetter publisherGetter = (PublisherGetter) getContext();
+            publisher = publisherGetter.getPublisher();
+            //Добавляем подписчика
+            publisher.subscribe(this);
+        }
     }
 
     @Override
@@ -173,7 +187,11 @@ public class NoteListFragment extends Fragment implements Observer {
         Fragment noteFragment = fragmentManager.findFragmentById(R.id.noteView);
         if (item.getItemId() == R.id.action_delete) {
             int position = adapter.getMenuPosition();
+            //Вносим иземение в firebase
+            firebase.deleteCardData(position);
+            //Удаляем заметку из листа
             notesArrayList.remove(position);
+            //Уведомляем адаптер
             adapter.notifyItemRemoved(position);
             if (isLandscape && noteFragment != null) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -191,6 +209,8 @@ public class NoteListFragment extends Fragment implements Observer {
         notesArrayList.set(position, note);
         //Меняем RecyclerView
         adapter.notifyItemChanged(position);
+        //Вносим иземение в firebase
+        firebase.updateNote(position, note);
     }
 
 }

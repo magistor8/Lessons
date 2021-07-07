@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class Note implements Parcelable{
 
+    private String id;          // идентификатор
     private String title;
     private String description;
     private long date;
@@ -14,19 +15,19 @@ public class Note implements Parcelable{
     public Note(String title, String description) {
         this.title = title;
         this.description = description;
-        date = new Date().getTime();
+        this.date = new Date().getTime();
     }
 
-    public Note(String title, String description, int Date) {
+    public Note(String title, String description, long Date) {
         this.title = title;
         this.description = description;
-        date = (long) Date * 1000;
+        this.date = Date;
     }
 
     protected Note(Parcel in) {
-        title = in.readString();
-        description = in.readString();
-        date = in.readLong();
+        this.title = in.readString();
+        this.description = in.readString();
+        this.date = in.readLong();
     }
 
     public static final Creator<Note> CREATOR = new Creator<Note>() {
@@ -40,6 +41,18 @@ public class Note implements Parcelable{
             return new Note[size];
         }
     };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeLong(date);
+    }
 
     public String getTitle() {
         return title;
@@ -65,15 +78,11 @@ public class Note implements Parcelable{
         return date;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getId() {
+        return id;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(description);
-        dest.writeLong(date);
+    public void setId(String id) {
+        this.id = id;
     }
 }

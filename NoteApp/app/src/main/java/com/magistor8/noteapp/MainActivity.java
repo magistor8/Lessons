@@ -30,17 +30,12 @@ public class MainActivity extends AppCompatActivity implements PublisherGetter {
         if (savedInstanceState == null){
 
             NoteListFragment noteListFragment = new NoteListFragment();
-            // Подписываем фрагменты
-            publisher.subscribe(noteListFragment);
             noteListFragment.setArguments(getIntent().getExtras());
 
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, noteListFragment)
                     .commit();
-        } else {
-            NoteListFragment noteListFragment = (NoteListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            publisher.subscribe(noteListFragment);
         }
 
     }
