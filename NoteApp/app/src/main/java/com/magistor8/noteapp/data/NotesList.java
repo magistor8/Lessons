@@ -1,4 +1,4 @@
-package com.magistor8.noteapp;
+package com.magistor8.noteapp.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
