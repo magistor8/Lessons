@@ -1,6 +1,6 @@
 package com.magistor8.noteapp.observer;
 
-import com.magistor8.noteapp.Note;
+import com.magistor8.noteapp.data.Note;
 
 import java.util.ArrayList;
 import java.util.List;

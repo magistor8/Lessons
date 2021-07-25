@@ -1,4 +1,4 @@
-package com.magistor8.noteapp;
+package com.magistor8.noteapp.data;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -22,9 +22,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.magistor8.noteapp.R;
+import com.magistor8.noteapp.firebase.Firebase;
+import com.magistor8.noteapp.firebase.FirebaseComplete;
 import com.magistor8.noteapp.observer.Observer;
 import com.magistor8.noteapp.observer.Publisher;
 import com.magistor8.noteapp.observer.PublisherGetter;
+import com.magistor8.noteapp.ui.DeleteNoteDialogFragment;
+import com.magistor8.noteapp.ui.NoteAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -186,19 +191,27 @@ public class NoteListFragment extends Fragment implements Observer, FirebaseComp
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         Fragment noteFragment = fragmentManager.findFragmentById(R.id.noteView);
         if (item.getItemId() == R.id.action_delete) {
-            int position = adapter.getMenuPosition();
-            //Вносим иземение в firebase
-            firebase.deleteCardData(position);
-            //Удаляем заметку из листа
-            notesArrayList.remove(position);
-            //Уведомляем адаптер
-            adapter.notifyItemRemoved(position);
-            if (isLandscape && noteFragment != null) {
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.remove(noteFragment);
-                fragmentTransaction.commit();
-            }
-            return true;
+            //Покажем диалог с вопросом
+            DeleteNoteDialogFragment deleteNoteDialogFragment = DeleteNoteDialogFragment.newInstance();
+            deleteNoteDialogFragment.show(requireActivity().getSupportFragmentManager(), "deleteNoteDialogFragment");
+            //Лисенер для кнопки ОК
+            View.OnClickListener listener = v -> {
+                int position = adapter.getMenuPosition();
+                //Вносим иземение в firebase
+                firebase.deleteCardData(position);
+                //Удаляем заметку из листа
+                notesArrayList.remove(position);
+                //Уведомляем адаптер
+                adapter.notifyItemRemoved(position);
+                deleteNoteDialogFragment.dismiss();
+                if (isLandscape && noteFragment != null) {
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.remove(noteFragment);
+                    fragmentTransaction.commit();
+                }
+            };
+            deleteNoteDialogFragment.setPositiveButton(listener);
+            //return true;
         }
         return super.onContextItemSelected(item);
     }

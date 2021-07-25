@@ -1,4 +1,4 @@
-package com.magistor8.noteapp;
+package com.magistor8.noteapp.ui;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+
+import com.magistor8.noteapp.R;
 
 import java.util.Date;
 import java.util.GregorianCalendar;

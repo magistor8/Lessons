@@ -1,4 +1,4 @@
-package com.magistor8.noteapp;
+package com.magistor8.noteapp.firebase;
 
 import android.util.Log;
 
@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.*;
+import com.magistor8.noteapp.data.Note;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class Firebase {
     // Загружаемый список карточек
     private List<Note> notesArrayList  = new ArrayList<>();
 
-    protected void init (FirebaseComplete firebaseComplete) {
+    public void init (FirebaseComplete firebaseComplete) {
         // Получить всю коллекцию, отсортированную по полю «Дата»
         collection.orderBy(CardDataMapping.Fields.DATE, Query.Direction.DESCENDING).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -58,13 +59,13 @@ public class Firebase {
                 });
     }
 
-    protected void updateNote(int position, Note note) {
+    public void updateNote(int position, Note note) {
         String id = note.getId();
         // Изменить документ по идентификатору
         collection.document(id).set(CardDataMapping.toDocument(note));
     }
 
-    protected void addCardData(final Note note) {
+    public void addCardData(final Note note) {
         // Добавить документ
         collection.add(CardDataMapping.toDocument(note))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -75,12 +76,12 @@ public class Firebase {
         });
     }
 
-    protected void deleteCardData(int position) {
+    public void deleteCardData(int position) {
         // Удалить документ с определённым идентификатором
         collection.document(notesArrayList.get(position).getId()).delete();
     }
 
-    protected int getSize() {
+    public int getSize() {
         return notesArrayList.size();
     }
 
