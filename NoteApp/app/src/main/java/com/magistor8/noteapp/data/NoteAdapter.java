@@ -1,4 +1,4 @@
-package com.magistor8.noteapp.ui;
+package com.magistor8.noteapp.data;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.magistor8.noteapp.data.Note;
 import com.magistor8.noteapp.R;
 
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package com.magistor8.noteapp.data;
+package com.magistor8.noteapp.ui;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -16,9 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.magistor8.noteapp.R;
+import com.magistor8.noteapp.data.Note;
 import com.magistor8.noteapp.observer.Publisher;
 import com.magistor8.noteapp.observer.PublisherGetter;
-import com.magistor8.noteapp.ui.DatePickerFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

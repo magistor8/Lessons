@@ -1,4 +1,4 @@
-package com.magistor8.noteapp.data;
+package com.magistor8.noteapp.ui;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -23,13 +23,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.magistor8.noteapp.R;
+import com.magistor8.noteapp.data.Note;
+import com.magistor8.noteapp.data.NoteAdapter;
+import com.magistor8.noteapp.data.NotesList;
 import com.magistor8.noteapp.firebase.Firebase;
 import com.magistor8.noteapp.firebase.FirebaseComplete;
 import com.magistor8.noteapp.observer.Observer;
 import com.magistor8.noteapp.observer.Publisher;
 import com.magistor8.noteapp.observer.PublisherGetter;
-import com.magistor8.noteapp.ui.DeleteNoteDialogFragment;
-import com.magistor8.noteapp.ui.NoteAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -196,6 +197,12 @@ public class NoteListFragment extends Fragment implements Observer, FirebaseComp
             deleteNoteDialogFragment.show(requireActivity().getSupportFragmentManager(), "deleteNoteDialogFragment");
             //Лисенер для кнопки ОК
             View.OnClickListener listener = v -> {
+                //Если мы в ландшафтном режиме и у нас открыт просмотр заметки во фрагменте, то удаляем этот фрагмент
+                if (isLandscape && noteFragment != null) {
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.remove(noteFragment);
+                    fragmentTransaction.commitNow();
+                }
                 int position = adapter.getMenuPosition();
                 //Вносим иземение в firebase
                 firebase.deleteCardData(position);
@@ -204,11 +211,6 @@ public class NoteListFragment extends Fragment implements Observer, FirebaseComp
                 //Уведомляем адаптер
                 adapter.notifyItemRemoved(position);
                 deleteNoteDialogFragment.dismiss();
-                if (isLandscape && noteFragment != null) {
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.remove(noteFragment);
-                    fragmentTransaction.commit();
-                }
             };
             deleteNoteDialogFragment.setPositiveButton(listener);
             //return true;

@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-import com.magistor8.noteapp.data.NoteListFragment;
+import com.magistor8.noteapp.ui.NoteListFragment;
 import com.magistor8.noteapp.observer.Publisher;
 import com.magistor8.noteapp.observer.PublisherGetter;
 
